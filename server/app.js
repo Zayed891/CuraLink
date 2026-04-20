@@ -12,8 +12,29 @@ import { rateLimiter } from './middleware/rateLimiter.js';
 const app = express();
 
 app.use(helmet());
+
+// Allow multiple origins: localhost dev, primary Vercel deployment, and any Vercel preview URLs
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  env.CLIENT_URL,
+].filter(Boolean);
+
 app.use(cors({
-  origin: env.CLIENT_URL,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, Postman, curl)
+    if (!origin) return callback(null, true);
+
+    // Allow explicitly listed origins
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+
+    // Allow any Vercel preview deployment URL for this project
+    if (origin.match(/https:\/\/curalink-frontend.*\.vercel\.app$/)) {
+      return callback(null, true);
+    }
+
+    callback(new Error(`CORS blocked: ${origin}`));
+  },
   credentials: true,
 }));
 app.use(express.json({ limit: '2mb' }));
