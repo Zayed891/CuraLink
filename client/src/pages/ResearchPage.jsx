@@ -50,6 +50,15 @@ export default function ResearchPage() {
 
   // ── When patient changes, switch to their session ──────────────────
   useEffect(() => {
+    // If the user navigated here by clicking a specific session (from Dashboard/Library),
+    // respect that pin and don't override with the patient's default session.
+    const pinned = useChatStore.getState().pinnedSessionId;
+    if (pinned) {
+      // Clear the pin so next time the user navigates naturally it falls back to patient map
+      useChatStore.setState({ pinnedSessionId: null });
+      return;
+    }
+
     if (!patient) return;
 
     const savedSessionId = patientSessionMap[patient.id];

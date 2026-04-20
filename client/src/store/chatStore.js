@@ -10,6 +10,7 @@ const useChatStore = create(
       messages: [],
       isLoading: false,
       patientContext: null,
+      pinnedSessionId: null,  // set when navigating to a specific historical session
 
       clear: () => {
         set({
@@ -18,6 +19,7 @@ const useChatStore = create(
           messages: [],
           isLoading: false,
           patientContext: null,
+          pinnedSessionId: null,
         });
       },
 
@@ -89,7 +91,7 @@ const useChatStore = create(
       },
       
       setActiveSession: (sessionId) => {
-        set({ activeSessionId: sessionId });
+        set({ activeSessionId: sessionId, pinnedSessionId: sessionId });
         get().loadHistory(sessionId);
       }
     }),
