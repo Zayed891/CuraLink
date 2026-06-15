@@ -191,6 +191,7 @@ export default function LandingPage() {
           .responsive-footer { grid-template-columns: 1fr; text-align: center; }
           .footer-links { text-align: center !important; }
           .footer-logo { justify-content: center; }
+          .footer-copy { max-width: none !important; margin: 0 auto; }
           .hero-h1 { font-size: 38px; }
           .hero-sub { font-size: 15px; padding: 0 10px; }
           .search-bar-row { flex-direction: column; align-items: stretch !important; gap: 14px; }
@@ -598,7 +599,7 @@ export default function LandingPage() {
                 Curalink<span style={{ color: 'var(--accent)' }}>AI</span>
               </span>
             </div>
-            <p style={{ fontFamily: 'Inter', fontSize: 13, color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, maxWidth: 260 }}>
+            <p className="footer-copy" style={{ fontFamily: 'Inter', fontSize: 13, color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, maxWidth: 260 }}>
               © {new Date().getFullYear()} Curalink AI. Surgical precision in clinical insight.
             </p>
           </div>
